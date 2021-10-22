@@ -12,4 +12,83 @@ model Ocean {
   name        String
   depth       Float
   location    String
+  creature    Creature[]
+  Exploration Exploration[]
+}
+
+model Creature {
+  id                   String              @id @default(uuid())
+  name                 String
+  species              String
+  oceanId              String
+  ocean                Ocean               @relation(fields: [oceanId], references: [id])
+  ConservationStatus   ConservationStatus? @relation(fields: [conservationStatusId], references: [id])
+  conservationStatusId String?
+  Observation          Observation[]
+}
+
+model Species {
+  id   String @id @default(uuid())
+  name String
+}
+
+model Habitat {
+  id       String @id @default(uuid())
+  name     String
+  location String
+}
+
+model Exploration {
+  id           String      @id @default(uuid())
+  date         DateTime
+  oceanId      String
+  ocean        Ocean       @relation(fields: [oceanId], references: [id])
+  details      String
+  Researcher   Researcher? @relation(fields: [researcherId], references: [id])
+  researcherId String?
+  Equipment    Equipment?  @relation(fields: [equipmentId], references: [id])
+  equipmentId  String?
+}
+
+model Researcher {
+  id           String        @id @default(uuid())
+  name         String
+  expertise    String
+  explorations Exploration[]
+  Expedition   Expedition?   @relation(fields: [expeditionId], references: [id])
+  observations Observation[]
+  expeditionId String?
+}
+
+model ConservationStatus {
+  id          String     @id @default(uuid())
+  status      String
+  description String
+  creatures   Creature[]
+}
+
+model Observation {
+  id           String      @id @default(uuid())
+  date         DateTime
+  details      String
+  creatureId   String
+  creature     Creature    @relation(fields: [creatureId], references: [id])
+  researcher   Researcher? @relation(fields: [researcherId], references: [id])
+  researcherId String?
+}
+
+model Expedition {
+  id          String       @id @default(uuid())
+  name        String
+  date        DateTime
+  details     String
+  researchers Researcher[]
+}
+
+model Equipment {
+  id           String        @id @default(uuid())
+  name         String
+  type         String
+  usage        String
+  explorations Exploration[]
 }
