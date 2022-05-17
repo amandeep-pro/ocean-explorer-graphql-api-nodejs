@@ -1,0 +1,196 @@
+# Ocean Type
+type Ocean {
+  id: ID!
+  name: String!
+  depth: Float!
+  location: String!
+  creatures: [Creature!]!
+}
+
+# Query and Mutation for Ocean
+type Query {
+  oceans: [Ocean!]!
+}
+
+type Mutation {
+  createOcean(name: String!, depth: Float!, location: String!): Ocean!
+  updateOcean(id: ID!, name: String, depth: Float, location: String): Ocean
+  deleteOcean(id: ID!): Boolean
+}
+
+# Creature Type
+type Creature {
+  id: ID!
+  name: String!
+  species: String!
+  ocean: Ocean!
+  conservationStatus: ConservationStatus
+  observations: [Observation!]!
+}
+
+# Query and Mutation for Creature
+type Query {
+  creatures: [Creature!]!
+}
+
+type Mutation {
+  createCreature(name: String!, species: String!, oceanId: ID!, conservationStatusId: ID): Creature!
+  updateCreature(id: ID!, name: String, species: String, oceanId: ID, conservationStatusId: ID): Creature
+  deleteCreature(id: ID!): Boolean
+}
+
+# Species Type
+type Species {
+  id: ID!
+  name: String!
+  creatures: [Creature!]!
+}
+
+# Query and Mutation for Species
+type Query {
+  species: [Species!]!
+}
+
+type Mutation {
+  createSpecies(name: String!): Species!
+  updateSpecies(id: ID!, name: String): Species
+  deleteSpecies(id: ID!): Boolean
+}
+
+# Habitat Type
+type Habitat {
+  id: ID!
+  name: String!
+  location: String!
+  creatures: [Creature!]!
+}
+
+# Query and Mutation for Habitat
+type Query {
+  habitats: [Habitat!]!
+}
+
+type Mutation {
+  createHabitat(name: String!, location: String!): Habitat!
+  updateHabitat(id: ID!, name: String, location: String): Habitat
+  deleteHabitat(id: ID!): Boolean
+}
+
+# Exploration Type
+type Exploration {
+  id: ID!
+  date: String!
+  ocean: Ocean!
+  details: String
+  researcher: Researcher
+  equipment: Equipment
+}
+
+# Query and Mutation for Exploration
+type Query {
+  explorations: [Exploration!]!
+}
+
+type Mutation {
+  createExploration(date: String!, oceanId: ID!, details: String, researcherId: ID, equipmentId: ID): Exploration!
+  updateExploration(id: ID!, date: String, oceanId: ID, details: String, researcherId: ID, equipmentId: ID): Exploration
+  deleteExploration(id: ID!): Boolean
+}
+
+# Researcher Type
+type Researcher {
+  id: ID!
+  name: String!
+  expertise: String!
+  explorations: [Exploration!]!
+  observations: [Observation!]!
+}
+
+# Query and Mutation for Researcher
+type Query {
+  researchers: [Researcher!]!
+}
+
+type Mutation {
+  createResearcher(name: String!, expertise: String!): Researcher!
+  updateResearcher(id: ID!, name: String, expertise: String): Researcher
+  deleteResearcher(id: ID!): Boolean
+}
+
+# ConservationStatus Type
+type ConservationStatus {
+  id: ID!
+  status: String!
+  description: String
+  creatures: [Creature!]!
+}
+
+# Query and Mutation for ConservationStatus
+type Query {
+  conservationStatuses: [ConservationStatus!]!
+}
+
+type Mutation {
+  createConservationStatus(status: String!, description: String): ConservationStatus!
+  updateConservationStatus(id: ID!, status: String, description: String): ConservationStatus
+  deleteConservationStatus(id: ID!): Boolean
+}
+
+# Observation Type
+type Observation {
+  id: ID!
+  date: String!
+  details: String
+  creature: Creature!
+  researcher: Researcher
+}
+
+# Query and Mutation for Observation
+type Query {
+  observations: [Observation!]!
+}
+
+type Mutation {
+  createObservation(date: String!, details: String, creatureId: ID!, researcherId: ID): Observation!
+  updateObservation(id: ID!, date: String, details: String, creatureId: ID, researcherId: ID): Observation
+  deleteObservation(id: ID!): Boolean
+}
+
+# Expedition Type
+type Expedition {
+  id: ID!
+  name: String!
+  date: String!
+  researchers: [Researcher!]!
+  details: String
+}
+
+# Query and Mutation for Expedition
+type Query {
+  expeditions: [Expedition!]!
+}
+
+type Mutation {
+  createExpedition(name: String!, date: String!, details: String): Expedition!
+  updateExpedition(id: ID!, name: String, date: String, details: String): Expedition
+  deleteExpedition(id: ID!): Boolean
+}
+
+# Equipment Type
+type Equipment {
+  id: ID!
+  name: String!
+  type: String!
+  usage: String
+}
+
+# Query and Mutation for Equipment
+type Query {
+  equipments: [Equipment!]!
+}
+
+type Mutation {
+  createEquipment(name: String!, type: String!, usage: String): Equipment!
+  updateEquipment(id: ID!, name: String, type: String, usage: String): Equipment
+  deleteEquipment(id: ID!): Boolean
+}
